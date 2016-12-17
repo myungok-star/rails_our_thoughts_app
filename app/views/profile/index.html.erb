@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Our Thoughts App</title>
+
+<!-- STYLESHEETS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+<link rel="stylesheet" href="./styles/main.css">
+<!-- Google font -->
+<link href="https://fonts.googleapis.com/css?family=Carme" rel="stylesheet">
+<!--JQuery CDN  -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- Handlebars CDN -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+<!-- APPLICATION SCRIPTS -->
+<script src="./scripts/app.js"></script>
+
+</head>
+
+<body>
+
+
+
+            <% if current_user %>
+  Signed in as <%= current_user.email %> | <%= link_to "Logout", '/logout' %>
+<% else %>
+  <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
+<% end %>
+
+<nav class="N/A transparent z-depth-0">
+    <div class="nav-wrapper">
+<%= yield %>
+        </div>
+    </nav>
+
+
+    <div class="container text-center">
+        <div class="thought-row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>Add a new thought!</h3>
+                <hr>
+                <form id="newThought-form">
+                    <div class="form-group">
+                        <input type="messeage" name="description" class="form-control" placeholder="Your Thought Here" autofocus required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categorySelect">Select Category</label>
+                        <select name="category" class="form-control" id="categorySelect">
+                          <option value="Select">Choose One:</option>
+                          <option value="Happy">Happy</option>
+                          <option value="Weird">Weird</option>
+                          <option value="Sad">Sad</option>
+                          <option value="Funny">Funny</option>
+                          <option value="Random">Random</option>
+
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add to collection</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+    <div id="thoughtTarget" class="thoughtsList">
+        <!-- handlebar template -->
+        <script id="thoughts-template" type="text/x-handlebars-template">
+
+            {{#each thoughts}}
+            <div class="eachThought" id="eachThought-normal">
+                <p>
+                    <b>{{description}}</b> <br> Category: {{category}}
+
+                    <button type="button" name="button" class="deleteBtn btn btn-danger pull-right" data-id={{_id}}>Delete</button>
+
+                    <button type="button" name="button" class="btn btn-warning pull-right" data-id={{_id}} onclick="showDiv()">Update </button>
+                </p>
+            </div>
+            <div class="eachThought" id="eachThought-edit" style="display: hide">
+                <form class="form-inline form-edit-thought" id="thoughtForm{{_id}}" data-id={{_id}}>
+                    <label for="editDescription">Description</label>
+                    <input type="text" class="form-control" name="description" value="{{description}}">
+                    <label for="editCategory">Category</label>
+                    <input type="text" class="form-control" name="category" value="{{category}}">
+
+                    <button type="submit" class="saveBtn btn btn-default pull-right">Save Edit</button>
+                </form>
+            </div>
+
+            {{/each}}
+        </script>
+    </div>
+    <footer class="profile-footer">
+        <div class="footer-text">
+            Created By <a href="https://www.linkedin.com/in/myungok-starkim" target="_blank">Star</a> & <a href="https://www.linkedin.com/in/stephen-dangerfield-a46372128" target="_blank">Stephen</a>
+        </div>
+    </footer>
+
+    <!-- materialize Scripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+</body>
+
+</html>
